@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <a href="/dashboard"><button>Dashboard</button></a>
+        <div class="view">
+            <h1 class="page_title">Edit Recipe {{recipe.name}}</h1>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="/recipes/edit/process/{{recipe.id}}" method="post">
+                <input type="text" name="name" id="name" value="{{recipe.name}}">
+                <div class="text_area">
+                    <textarea name="description" id="description">{{recipe.description}}</textarea>
+                    <textarea name="instructions" id="instructions">{{recipe.instructions}}</textarea>
+                </div>
+                <div class="under_30">
+                    <p>Passed Down?:</p>
+                    <input type="radio" name="under_30" id="under_30" value="1" class="form-check-input" {% if recipe.under_30 == 1 %}checked{% endif %}>
+                    <label for="under_30">Yes</label>
+                    <input type="radio" name="under_30" id="under_30" value="0" class="form-check-input" {% if recipe.under_30 == 0 %}checked{% endif %}>
+                    <label for="under_30">No</label>
+                </div>
+                <button type="submit" class="btn btn-success mt-2 border border-1">Update</button>
+            </form>
+        </div>
+        <a href="/user/logout"><button>Logout</button></a>
+    </div>
+</body>
+</html>

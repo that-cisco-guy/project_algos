@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard">
+        <h1 class="page_title">Hey {{user.first_name}} {{user.last_name}}</h1>
+        <a href="/recipes/new"><button>Create Recipe</button></a>
+        <a href=""><button>Photos</button></a>
+        <a href=""><button>Tree</button></a>
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Passed Down?</th>
+                        <th>Posted by</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipe in recipes %}
+                        <tr>
+                            <td>{{recipe.name}}</td>
+                            <td>
+                                {% if recipe.under_30 == 1 %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
+                            <td>{{recipe.creator.first_name}}</td>
+                            <td>
+                                <a href="/recipes/{{recipe.id}}"><button>View Instructions</button></a>
+                                {% if session['user_id'] == recipe.creator.id %}
+                                    <a href="/recipes/edit/{{recipe.id}}"><button>Edit</button></a>
+                                    <a href="/recipes/destroy/{{recipe.id}}"><button>Delete</button></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="/user/logout"><button>Logout</button></a>
+    </div>
+</body>
+</html>

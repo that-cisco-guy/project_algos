@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard">
+        <a href="/dashboard"><button>Dashboard</button></a>
+        <a href="/recipe/new"><button>Create Recipe</button></a>
+        <div class="container">
+            <h1>Recipe Information</h1>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Species</th>
+                    <th>Location</th>
+                    <th>Reason</th>
+                    <th>Date Planted</th>
+                    <th>User ID</th>
+                </tr>
+                {% for recipe in user.recipe %}
+                <tr>
+                    <td>{{ recipe.name }}</td>
+                    <td>{{ recipe.description }}</td>
+                    <td><p>Under 30 Minutes?</p></td>
+                    <td>
+                        <p>
+                            {% if recipe.under_30 == 1 %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </p>
+                    </td>
+                    <td>{{ recipe.date_made.strftime('%B %dth, %Y') }}</td>
+                    <td>{{ recipe.user_id }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <a href="/user/logout"><button>Logout</button></a>
+    </div>
+</body>
+
+</html>
